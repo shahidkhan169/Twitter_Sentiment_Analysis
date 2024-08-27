@@ -4,7 +4,7 @@ from flask_cors import CORS
 
 app = Flask(__name__)
 
-CORS(app, resources={r"/*": {"origins": ["https://twitter-sentiment-analysis-sigma.vercel.app"]}})
+CORS(app, resources={r"/*": {"origins": "*"}})
 model = joblib.load('logistic_regression_model.pkl')
 
 # Function to map predictions to labels
