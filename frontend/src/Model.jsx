@@ -15,7 +15,7 @@ const Model = () => {
     try {
       const response = await axios.post('https://twitter-api-v62m.onrender.com/predict', { text });
       // Extract only the sentiment from the response
-      setPrediction(response.data.sentiment);
+      setPrediction(response.data.predicted_sentiment);
     } catch (error) {
       console.error('Error making prediction:', error);
       setError('Error making prediction. Please try again.');
