@@ -10,7 +10,7 @@ model = joblib.load('logistic_regression_model.pkl')
 # Function to map predictions to labels
 def map_prediction(prediction):
     if prediction == 2:
-        return "positive"
+        return "Positive"
     elif prediction == 1:
         return "Neutral"
     elif prediction == 0:

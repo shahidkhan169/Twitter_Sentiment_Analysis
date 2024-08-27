@@ -1,4 +1,3 @@
-// src/TextBar.js
 import React, { useState } from 'react';
 import axios from 'axios';
 import './Model.css'; // Ensure correct path for custom styles
@@ -14,7 +13,6 @@ const Model = () => {
     setError('');
     try {
       const response = await axios.post('https://twitter-api-v62m.onrender.com/predict', { text });
-      // Extract only the sentiment from the response
       setPrediction(response.data.predicted_sentiment);
     } catch (error) {
       console.error('Error making prediction:', error);
@@ -32,11 +30,11 @@ const Model = () => {
         onChange={(e) => setText(e.target.value)}
         placeholder="Enter text for sentiment analysis"
       />
-      <button onClick={handlePredict} disabled={loading}>
+      <button type="button" onClick={handlePredict} disabled={loading}>
         {loading ? 'Predicting...' : 'Predict'}
       </button>
       {error && <p className="error">{error}</p>}
-      <p>{prediction}</p>
+      {prediction && <p>{prediction}</p>} {/* Ensure content is conditionally rendered */}
     </div>
   );
 };
