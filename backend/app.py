@@ -1,72 +1,37 @@
-import flask
 from flask import Flask, request, jsonify
+import joblib
 from flask_cors import CORS
-from pyspark.sql import SparkSession
-from pyspark.ml import PipelineModel
-from pyspark.ml.tuning import CrossValidatorModel
-from pyspark.sql.functions import udf
-from pyspark.sql.types import StringType
 
-# Create Flask app
 app = Flask(__name__)
 
-# Enable CORS for all origins (or specify the origins you want to allow)
-CORS(app, resources={r"/*": {"origins": "https://twitter-sentiment-analysis-sigma.vercel.app"}})
+CORS(app)
+model = joblib.load('logistic_regression_model.pkl')
 
-# Initialize Spark session
-spark = SparkSession.builder \
-    .appName("SentimentAnalysisAPI") \
-    .master("local[*]") \
-    .getOrCreate()
-
-# Load the saved pipeline and model from local directory
-pipelineModel = PipelineModel.load("pipeline_folder")
-cvModel = CrossValidatorModel.load("model_folder")
-
-# Define the label mapping function
+# Function to map predictions to labels
 def map_prediction(prediction):
-    if prediction == 2.0:
-        return "Negative"
-    elif prediction == 1.0:
+    if prediction == 2:
+        return "positive"
+    elif prediction == 1:
         return "Neutral"
-    elif prediction == 0.0:
-        return "Positive"
+    elif prediction == 0:
+        return "Negative"
     else:
-        return "Unknown"
-
-# Register the UDF
-map_prediction_udf = udf(map_prediction, StringType())
-
-@app.route('/')
-def home():
-    return "Hello, World!"
+        return None
 
 @app.route('/predict', methods=['POST'])
-def predict_sentiment():
-    data = request.json
+def predict():
+    data = request.get_json(force=True)
+    text = data.get('text', None)
+    
+    if text is None:
+        return jsonify({'error': 'No text provided'}), 400
 
-    # Check if 'text' is present in the request
-    if 'text' not in data:
-        return jsonify({"error": "No text field provided"}), 400
-
-    # Convert the JSON data to a Spark DataFrame
-    new_data = spark.createDataFrame([(1, data['text'])], ["id", "clean_text"])
-
-    # Transform the new data using the pipeline
-    transformed_new_data = pipelineModel.transform(new_data)
-
-    # Make predictions
-    predictions = cvModel.transform(transformed_new_data)
-
-    # Apply the UDF to add a human-readable label
-    predictions_with_labels = predictions.withColumn("predicted_label", map_prediction_udf("prediction"))
-
-    # Get the result
-    result = predictions_with_labels.select("predicted_label").collect()[0]["predicted_label"]
+    # Perform prediction
+    prediction = model.predict([text])
+    mapped_prediction = map_prediction(prediction[0])
 
     # Return the result as JSON
-    return jsonify({"text": data['text'], "sentiment": result})
+    return jsonify({'text': text, 'predicted_sentiment': mapped_prediction})
 
 if __name__ == '__main__':
-    # Run Flask app
-    app.run(host='0.0.0.0', port=5000)
+    app.run(debug=True)
