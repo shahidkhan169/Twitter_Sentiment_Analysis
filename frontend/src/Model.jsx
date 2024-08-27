@@ -13,7 +13,7 @@ const Model = () => {
     setLoading(true);
     setError('');
     try {
-      const response = await axios.post('https://4dc1-35-231-26-0.ngrok-free.app/predict', { text });
+      const response = await axios.post('https://twitter-api-v62m.onrender.com/predict', { text });
       // Extract only the sentiment from the response
       setPrediction(response.data.sentiment);
     } catch (error) {
