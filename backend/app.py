@@ -5,7 +5,7 @@ import joblib
 app = Flask(__name__)
 
 # Allow specific origins
-CORS(app, resources={r"/*": {"origins": ["http://localhost:5173"]}})
+CORS(app, resources={r"/*": {"origins": ["https://twitter-sentiment-analysis-sigma.vercel.app"]}})
 
 model = joblib.load('logistic_regression_model.pkl')
 
