@@ -12,7 +12,7 @@ const Model = () => {
     setLoading(true);
     setError('');
     try {
-      const response = await axios.post('https://twitter-api-v62m.onrender.com/predict', { text });
+      const response = await axios.post('http://127.0.0.1:5000/predict', { text });
       setPrediction(response.data.predicted_sentiment);
     } catch (error) {
       console.error('Error making prediction:', error);
@@ -29,12 +29,13 @@ const Model = () => {
         value={text}
         onChange={(e) => setText(e.target.value)}
         placeholder="Enter text for sentiment analysis"
+        className="text-input"
       />
-      <button type="button" onClick={handlePredict} disabled={loading}>
+      <button type="button" onClick={handlePredict} disabled={loading} className="predict-button">
         {loading ? 'Predicting...' : 'Predict'}
       </button>
       {error && <p className="error">{error}</p>}
-      {prediction && <p>{prediction}</p>} {/* Ensure content is conditionally rendered */}
+      {prediction && <p className="prediction">{prediction}</p>} {/* Ensure content is conditionally rendered */}
     </div>
   );
 };

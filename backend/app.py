@@ -1,13 +1,14 @@
 from flask import Flask, request, jsonify
-import joblib
 from flask_cors import CORS
+import joblib
 
 app = Flask(__name__)
 
-CORS(app, resources={r"/*": {"origins": "*"}})
+# Allow specific origins
+CORS(app, resources={r"/*": {"origins": ["http://localhost:5173"]}})
+
 model = joblib.load('logistic_regression_model.pkl')
 
-# Function to map predictions to labels
 def map_prediction(prediction):
     if prediction == 2:
         return "Positive"
@@ -26,11 +27,9 @@ def predict():
     if text is None:
         return jsonify({'error': 'No text provided'}), 400
 
-    # Perform prediction
     prediction = model.predict([text])
     mapped_prediction = map_prediction(prediction[0])
 
-    # Return the result as JSON
     return jsonify({'text': text, 'predicted_sentiment': mapped_prediction})
 
 if __name__ == '__main__':

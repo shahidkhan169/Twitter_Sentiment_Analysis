@@ -1,16 +1,17 @@
-// src/App.js
 import React from 'react';
-import Navbar from './Navbar'
-import Model from './Model';
-import './App.css'; // Optional: Add custom styles if needed
+import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import MainPage from './MainPage';
+import Description  from './Description';
 
-const App = () => {
+function App() {
   return (
-    <div className="app">
-      <Navbar />
-      <Model />
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<MainPage />} />
+        <Route path="/Description" element={<Description />} />
+      </Routes>
+    </Router>
   );
-};
+}
 
 export default App;
