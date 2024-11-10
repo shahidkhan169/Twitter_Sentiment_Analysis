@@ -12,7 +12,7 @@ const Model = () => {
     setLoading(true);
     setError('');
     try {
-      const response = await axios.post('http://127.0.0.1:5000/predict', { text });
+      const response = await axios.post('https://twitter-api-4egk.onrender.com', { text });
       setPrediction(response.data.predicted_sentiment);
     } catch (error) {
       console.error('Error making prediction:', error);
