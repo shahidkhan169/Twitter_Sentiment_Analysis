@@ -91,14 +91,14 @@ const DatasetDescription = () => {
       <section className="mb-10">
         <h2 className="text-2xl font-semibold text-left">License</h2>
         <p className="mt-4 text-left">
-          The dataset is released under the [License Name]. You can use it freely for non-commercial purposes.
+          The dataset is released under the [Attribution 4.0 International(cc)]. You can use it freely for non-commercial purposes.
         </p>
       </section>
 
       <section className="mb-10">
         <h2 className="text-2xl font-semibold text-left">References</h2>
         <p className="mt-4 text-left">
-          Kaggle Dataset: <a href="https://www.kaggle.com" className="text-blue-500 underline">Link to Kaggle Dataset</a>.
+          Kaggle Dataset: <a href="https://www.kaggle.com/datasets/saurabhshahane/twitter-sentiment-dataset" className="text-blue-500 underline">Link to Kaggle Dataset</a>.
         </p>
       </section>
       
