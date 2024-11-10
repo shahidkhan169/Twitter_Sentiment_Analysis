@@ -13,14 +13,14 @@ const MainPage = () => {
       </div>
 
       {/* Link to Dataset Description Page at the bottom */}
-      <div className="absolute bottom-10 w-full text-center">
-        <a
-          href="/description"
-          className="text-blue-500 underline text-lg hover:text-blue-300"
-        >
-          Click Here for Dataset Description
-        </a>
-      </div>
+     <div className="absolute bottom-10 w-full text-center">
+      <Link
+        to="/description"
+        className="text-blue-500 underline text-lg hover:text-blue-300"
+      >
+        Click Here for Dataset Description
+      </Link>
+    </div>
     </div>
   );
 };
