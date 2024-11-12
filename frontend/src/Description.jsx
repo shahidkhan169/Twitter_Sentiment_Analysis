@@ -12,7 +12,7 @@ const DatasetDescription = () => {
     datasets: [
       {
         label: 'Sentiment Distribution',
-        data: [3000, 5000, 2000], // Example values; replace with actual counts from the dataset
+        data: [72250, 55213, 35510], 
         backgroundColor: [
           '#1E3A8A', // Dark Blue
           '#3B82F6', // Blue

@@ -4,7 +4,6 @@ import joblib
 
 app = Flask(__name__)
 
-# Allow specific origins with additional configuration
 CORS(app, resources={r"/*": {"origins": ["https://twitter-sentiment-analysis-sigma.vercel.app"],
                              "methods": ["GET", "POST", "OPTIONS"],
                              "allow_headers": ["Content-Type", "Authorization"],
